@@ -31,10 +31,10 @@
 **********************************************************************/
 function dbConnect()
 {
-    $conn = mysql_connect($host_with_port, $user_name, $user_pw);
+    $conn = mysqli_connect($host_with_port, $user_name, $user_pw);
     if (!$conn)
     {
-        die('could not connect to:'.mysql_error());
+        die('could not connect to:'.mysqli_error());
         return 0;
     }
     elseif ($conn)
@@ -42,6 +42,24 @@ function dbConnect()
         return 1;
     }
 }
+
+/**********************************************************
+* Function dbSelectData
+*
+* Get the data from mysql as required keyword
+*
+* Parameters:
+* <none>
+* 
+* Returns:
+* - 1 (connect success), 0 (connect failed)
+*
+* Synopsis:
+* (Example)
+* <connection> = dbConnect;
+*
+* (end)
+**********************************************************************/
 
 
 
