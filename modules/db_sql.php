@@ -18,7 +18,7 @@
 * Building up the connection with the mysql database
 *
 * Parameters:
-* <none>
+* $dbname
 * 
 * Returns:
 * - 1 (connect success), 0 (connect failed)
@@ -29,9 +29,9 @@
 *
 * (end)
 **********************************************************************/
-function dbConnect()
+function dbConnect($dbname)
 {
-    $conn = mysqli_connect($host_with_port, $user_name, $user_pw);
+    $conn = mysqli_connect($host_with_port, $user_name, $user_pw, $dbname);
     if (!$conn)
     {
         die('could not connect to:'.mysqli_error());
@@ -39,7 +39,7 @@ function dbConnect()
     }
     elseif ($conn)
     {
-        return 1;
+        return $conn;
     }
 }
 
@@ -49,18 +49,38 @@ function dbConnect()
 * Get the data from mysql as required keyword
 *
 * Parameters:
-* <none>
-* 
+* -$conn (connection of DB)
+* -$sql
+*   
 * Returns:
-* - 1 (connect success), 0 (connect failed)
+* - $result (Array of match row), 0 (no result match)
 *
 * Synopsis:
 * (Example)
-* <connection> = dbConnect;
+* <result> = dbSelectData(<conn>, <sql>);
 *
 * (end)
 **********************************************************************/
-
+function dbSelectData($conn, $sql)
+{
+    $result = mysqli_query($conn, $sql)
+    if($result)
+    {
+        if(mysqli_num_rows($result)>0)
+        {
+            return $result;
+        }
+        else
+        {
+            return "0 Result";
+        }
+    }
+    else
+    {
+        //die('Get Data from DB Error:'.mysqli_error($conn));
+        return false;
+    }
+}
 
 
 ?>
