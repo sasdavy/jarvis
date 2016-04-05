@@ -46,7 +46,7 @@ function dbConnect($dbname)
 /**********************************************************
 * Function dbSelectData
 *
-* Get the data from mysql as required keyword
+* Get the associate data from mysql as required keyword and return the associate value
 *
 * Parameters:
 * -$conn (connection of DB)
@@ -63,7 +63,8 @@ function dbConnect($dbname)
 **********************************************************************/
 function dbSelectData($conn, $sql)
 {
-    $result = mysqli_query($conn, $sql)
+    
+	$result = mysqli_query($conn, $sql)
     if($result)
     {
         if(mysqli_num_rows($result)>0)
@@ -81,6 +82,25 @@ function dbSelectData($conn, $sql)
         return false;
     }
 }
+
+/**********************************************************
+* Function dbReadSelectedData
+*
+* Read the 
+*
+* Parameters:
+* -$conn (connection of DB)
+* -$sql
+*   
+* Returns:
+* - $result (Array of match row), 0 (no result match)
+*
+* Synopsis:
+* (Example)
+* <result> = dbSelectData(<conn>, <sql>);
+*
+* (end)
+**********************************************************************/
 
 
 ?>
