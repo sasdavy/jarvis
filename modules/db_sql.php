@@ -12,44 +12,13 @@
     $port = '8889';
 
 
-/*********************************************************************
-* Function dbConnect
-*
-* Building up the connection with the mysql database
-*
-* Parameters:
-* $dbname
-* 
-* Returns:
-* - 1 (connect success), 0 (connect failed)
-*
-* Synopsis:
-* (Example)
-* <connection> = dbConnect;
-*
-* (end)
-**********************************************************************/
-function dbConnect($dbname)
-{
-    $conn = mysqli_connect($host_with_port, $user_name, $user_pw, $dbname);
-    if (!$conn)
-    {
-        die('could not connect to:'.mysqli_error());
-        return 0;
-    }
-    elseif ($conn)
-    {
-        return $conn;
-    }
-}
-
 /**********************************************************
 * Function dbSelectData
 *
 * Get the associate data from mysql as required keyword and return the associate value
 *
 * Parameters:
-* -$conn (connection of DB)
+* -$dbname (database name)
 * -$sql
 *   
 * Returns:
@@ -61,27 +30,35 @@ function dbConnect($dbname)
 *
 * (end)
 **********************************************************************/
-function dbSelectData($conn, $sql)
+function dbSelectData($dbname, $sql)
 {
-    
-	$result = mysqli_query($conn, $sql)
-    if($result)
+    $conn = mysqli_connect($host_with_port, $user_name, $user_pw, $dbname);
+	if (!$conn)
     {
-        if(mysqli_num_rows($result)>0)
-        {
-            return $result;
-        }
-        else
-        {
-            return "0 Result";
-        }
+        die('could not connect to:'.mysqli_error());
     }
-    else
-    {
-        //die('Get Data from DB Error:'.mysqli_error($conn));
-        return false;
-    }
+	else
+	{
+		$result = mysqli_query($conn, $sql)
+		 if($result)
+         {
+             if(mysqli_num_rows($result)>0)
+			 
+             {
+                 return $result;
+             }
+             else
+             {
+                 return "0 Result";
+             }
+		 }
+		 else
+		 {
+			 return false;
+		 }
+	}
 }
+
 
 /**********************************************************
 * Function dbReadSelectedData
