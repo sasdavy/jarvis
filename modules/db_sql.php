@@ -8,8 +8,9 @@
     $user_name = 'root';
     $user_pw = 'root';
     $host = 'localhost';
+	$port = '8889';
     $host_with_port = "$host".':'."$port";
-    $port = '8889';
+	$db_name = 'jarvis';
 
 
 /**********************************************************
@@ -18,11 +19,10 @@
 * Get the associate data from mysql as required keyword and return the associate value
 *
 * Parameters:
-* -$dbname (database name)
 * -$sql
 *   
 * Returns:
-* - $result (Array of match row), 0 (no result match)
+* - $result (Array of match row), 0 Result (no result match)
 *
 * Synopsis:
 * (Example)
@@ -30,36 +30,36 @@
 *
 * (end)
 **********************************************************************/
-function dbSelectData($dbname, $sql)
+function dbSelectData($sql)
 {
-    $conn = mysqli_connect($host_with_port, $user_name, $user_pw, $dbname);
+	global $host, $port, $user_name, $user_pw, $db_name;
+    $conn = mysqli_connect($host, $user_name, $user_pw, $db_name, $port);
 	if (!$conn)
     {
-        die('could not connect to:'.mysqli_error());
+        die('could not connect to:'.mysqli_connect_error());
     }
 	else
 	{
-		$result = mysqli_query($conn, $sql)
-		 if($result)
-         {
-             if(mysqli_num_rows($result)>0)
+		$result = mysqli_query($conn, $sql);
+        if(mysqli_num_rows($result)>0)
 			 
-             {
-                 return $result;
-             }
-             else
-             {
-                 return "0 Result";
-             }
-		 }
-		 else
-		 {
-			 return false;
-		 }
+        {
+            return $result;
+        }
+        else
+        {
+            return "0 Result";
+		}
 	}
 }
 
 
+
+function test($sql)
+
+{
+	echo $sql."<br/>";
+}
 /**********************************************************
 * Function dbReadSelectedData
 *
