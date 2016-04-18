@@ -13,11 +13,29 @@ $inputPwFin = str_replace($sugar, '', $inputPwEncry);
 // read the data from DB
 $sql = "SELECT user_name, pw FROM user_login";
 $result = dbSelectData($sql);
-while($row = mysqli_fetch_assoc($result))
+if ($result == '0 Result')
 {
-	echo "id:".$row['user_name']."<br/>"."password:".$row['pw'];
+	echo "No Match Find!";
 }
-
+else{
+	
+	while($row = mysqli_fetch_assoc($result))
+	{
+		$sqlUserName = $row['user_name'];
+		$sqlPw = $row['pw'];
+		if (($sqlUserName == $inputUserNameFin) && ($sqlPw == $inputPwFin))
+		{
+			session_start();
+			
+			//echo "ok";
+		}
+		else
+		{
+			echo "error";
+		}
+	//echo "id:".$row['user_name']."<br/>"."password:".$row['pw'];
+	}
+}
 
 
 
